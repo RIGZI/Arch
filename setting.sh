@@ -74,10 +74,7 @@ passwd rigzi
 pacman -S --needed xorg-server xorg-server-common xorg-xrandr xorg-xinit
 
 ## Main package
-pacman -S --needed firefox fish kitty
-
-## BSPWM package
-pacman -S --needed bspwm sxhkd picom dmenu nitrogen sddm
+pacman -S --needed firefox fish
 
 ## Audio package
 pacman -S --needed pulseaudio pulseaudio-alsa pavucontrol
@@ -85,40 +82,18 @@ pacman -S --needed pulseaudio pulseaudio-alsa pavucontrol
 ## Other package
 pacman -S --needed neofetch htop
 
+## Plasma package
+pacman -S --needed sddm plasma konsole dolphin ark kwrite spectacle krunner partitionmanager audacious packagekit-qt5
+
+
 # Clear
 clear
 
 # Enable service
 systemctl enable sddm
 
-# Logout rigzi
-su rigzi
-
-# Install aur
-git clone https://aur.archlinux.org/yay-bin.git
-cd yay-bin
-sudo -u rigzi makepkg -si --skipinteg --needed
-cd ..
-rm -rf yay-bin
-
-# Install nvidia driver
-yay -S nvidia-390xx nvidia-390xx-utils nvidia-390xx-settings
-
-# Install polybar
-yay -S --needed polybar-git
-
-# Setup config
-mkdir -pv /.config/{bspwm, sxhkd, polybar, picom}
-cp /usr/share/doc/bspwm/examples/bspwmrc ~/.config/bspwm
-cp /usr/share/doc/bspwm/examples/sxhkdrc ~/.config/sxhkd
-cp /usr/share/doc/picom/picom.conf.example ~/.config/picom.conf
-cp /usr/share/doc/polybar/examples/config.ini ~/.config/polybar/config
-chmod +x ~/.config/bspwm/bspwmrc
-echo "exec bspwm" >> .xinitrc
-
-## Edit bind
-#nano .config/sxhkd/sxhkdrc 
-#nano .config/sxhkd/bspwmrc
+# Enable fish
+chsh -s /usr/bin/fish
 
 # Setup grub
 #grub-install --recheck /dev/sda
