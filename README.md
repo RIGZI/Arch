@@ -2,8 +2,8 @@
 
 pacman -Syy
 
-pacman -S github-cli
+pacman -S git
 
-gh repo clone RIGZI/Arch
+git clone https://github.com/rigzi/arch
 
 bash /arch/install.sh
