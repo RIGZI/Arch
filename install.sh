@@ -41,7 +41,7 @@ pacstrap -i /mnt mkinitcpio grub dhcpcd ccache nano reflector intel-ucode wget c
 genfstab -Up /mnt >> /mnt/etc/fstab
 
 # Clone script
-cp setting.sh /mnt
+cp arch/setting.sh /mnt
 chmod +x /mnt/setting.sh
 
 # Clear
@@ -50,11 +50,8 @@ clear
 # Chroot
 arch-chroot /mnt ./setting.sh
 
-# Info
-echo "arch-chroot /mnt ./setting.sh"
-
 # Delete script
-echo "rm /mnt/setting.sh"
+rm /mnt/setting.sh
 
 # Umount
 echo "umount -R /mnt"

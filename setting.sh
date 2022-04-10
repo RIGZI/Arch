@@ -8,18 +8,12 @@ reflector -c "Russia" -a 8 -l 8 --sort rate --save /etc/pacman.d/mirrorlist
 ## Add multilib
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 
-# Clear
-clear
-
 ## Update key
 pacman-key --init
 pacman-key --populate
 
 ## Update system
 pacman -Syy --needed
-
-# Clear
-clear
 
 # Set time
 ln -svf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
@@ -43,9 +37,6 @@ sed -i "s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
 
 ## Generation language
 locale-gen
-
-## Clear
-clear
 
 ## Add RU other file
 echo "LANG=ru_RU.UTF-8" >> /etc/locale.conf
@@ -74,20 +65,13 @@ passwd rigzi
 pacman -S --needed xorg-server xorg-server-common xorg-xrandr xorg-xinit
 
 ## Main package
-pacman -S --needed firefox fish
+pacman -S --needed firefox fish neofetch htop
 
 ## Audio package
 pacman -S --needed pulseaudio pulseaudio-alsa pavucontrol
 
-## Other package
-pacman -S --needed neofetch htop
-
 ## Plasma package
 pacman -S --needed sddm plasma konsole dolphin ark kwrite spectacle krunner partitionmanager audacious packagekit-qt5
-
-
-# Clear
-clear
 
 # Enable service
 systemctl enable sddm
@@ -96,8 +80,5 @@ systemctl enable sddm
 chsh -s /usr/bin/fish
 
 # Setup grub
-#grub-install --recheck /dev/sda
-#grub-mkconfig -o /boot/grub/grub.cfg
-
-# Exit
-# exit
+grub-install --recheck /dev/sda
+grub-mkconfig -o /boot/grub/grub.cfg
