@@ -5,10 +5,10 @@
 parted -s /dev/sda mktable msdos
 
 ## Create boot partition
-parted -s /dev/sda mkpart primary 0% 200m
+parted -s /dev/sda mkpart primary 0% 100m
 
 ## Create root partition
-parted -s /dev/sda mkpart primary 200m 100%
+parted -s /dev/sda mkpart primary 100m 100%
 
 # Format partition
 
@@ -44,9 +44,6 @@ genfstab -Up /mnt >> /mnt/etc/fstab
 cp arch/setting.sh /mnt
 chmod +x /mnt/setting.sh
 
-# Clear
-clear
-
 # Chroot
 arch-chroot /mnt ./setting.sh
 
@@ -54,4 +51,4 @@ arch-chroot /mnt ./setting.sh
 rm /mnt/setting.sh
 
 # Umount
-echo "umount -R /mnt"
+umount -R /mnt
