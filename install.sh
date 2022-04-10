@@ -1,21 +1,4 @@
 
-# Set RU language
-
-## Load language
-loadkeys ru
-
-## Set font
-setfont cyr-sun16
-
-## Add RU locale
-sed -i "s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
-
-## Generation
-locale-gen
-
-## Set language
-export LANG=ru_RU.UTF-8
-
 # Create 2 partition
 
 ## Set msdos disk
@@ -57,19 +40,21 @@ pacstrap -i /mnt mkinitcpio grub dhcpcd ccache nano reflector intel-ucode wget c
 # Generation fstab
 genfstab -Up /mnt >> /mnt/etc/fstab
 
-# Setup mkinitcpio
-sed -i "s/^HOOKS=\(.*keyboard\)/HOOKS=\1 keymap/" /etc/mkinitcpio.conf
-mkinitcpio -p linux-zen
-
 # Clone script
-mv settings.sh /mnt
-chmod +x /mnt/settings.sh
+cp setting.sh /mnt
+chmod +x /mnt/setting.sh
+
+# Clear
+clear
 
 # Chroot
-arch-chroot /mnt /bin/bash -c /settings.sh
+arch-chroot /mnt ./setting.sh
+
+# Info
+echo "arch-chroot /mnt ./setting.sh"
 
 # Delete script
-rm /mnt/settings.sh
+echo "rm /mnt/setting.sh"
 
 # Umount
-umount -R /mnt
+echo "umount -R /mnt"

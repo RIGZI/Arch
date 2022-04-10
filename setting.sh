@@ -5,15 +5,21 @@ systemctl enable dhcpcd && systemctl start dhcpcd
 # Update pacman mirror list
 reflector -c "Russia" -a 8 -l 8 --sort rate --save /etc/pacman.d/mirrorlist
 
+## Add multilib
+sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
+
+# Clear
+clear
+
 ## Update key
 pacman-key --init
 pacman-key --populate
 
-## Add multilib
-sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
-
 ## Update system
-pacman -Syy --noconfirm --needed
+pacman -Syy --needed
+
+# Clear
+clear
 
 # Set time
 ln -svf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
@@ -38,6 +44,9 @@ sed -i "s/#\(ru_RU\.UTF-8\)/\1/" /etc/locale.gen
 ## Generation language
 locale-gen
 
+## Clear
+clear
+
 ## Add RU other file
 echo "LANG=ru_RU.UTF-8" >> /etc/locale.conf
 echo "LC_COLLATE=C" >> /etc/locale.conf
@@ -59,33 +68,36 @@ sed -i 's/^# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/%wheel ALL=(ALL:ALL) NOPASSWD: A
 echo "Set user password"
 passwd rigzi
 
-# Logout rigzi
-su rigzi
-
 # Install package
 
 ## Xorg package
-pacman -S --noconfirm --needed xorg-server xorg-server-common xorg-xrandr xorg-xinit
+pacman -S --needed xorg-server xorg-server-common xorg-xrandr xorg-xinit
 
 ## Main package
-pacman -S --noconfirm --needed firefox fish kitty
+pacman -S --needed firefox fish kitty
 
 ## BSPWM package
-pacman -S --noconfirm --needed bspwm sxhkd picom dmenu nitrogen sddm
+pacman -S --needed bspwm sxhkd picom dmenu nitrogen sddm
 
 ## Audio package
-pacman -S --noconfirm --needed pulseaudio pulseaudio-alsa pavucontrol
+pacman -S --needed pulseaudio pulseaudio-alsa pavucontrol
 
 ## Other package
-pacman -S --noconfirm --needed neofetch htop
+pacman -S --needed neofetch htop
+
+# Clear
+clear
 
 # Enable service
 systemctl enable sddm
 
+# Logout rigzi
+su rigzi
+
 # Install aur
 git clone https://aur.archlinux.org/yay-bin.git
 cd yay-bin
-makepkg -si --skipinteg --noconfirm --needed
+sudo -u rigzi makepkg -si --skipinteg --needed
 cd ..
 rm -rf yay-bin
 
@@ -96,7 +108,7 @@ yay -S nvidia-390xx nvidia-390xx-utils nvidia-390xx-settings
 yay -S --needed polybar-git
 
 # Setup config
-mkdir -pv .config/{bspwm, sxhkd, polybar, picom}
+mkdir -pv /.config/{bspwm, sxhkd, polybar, picom}
 cp /usr/share/doc/bspwm/examples/bspwmrc ~/.config/bspwm
 cp /usr/share/doc/bspwm/examples/sxhkdrc ~/.config/sxhkd
 cp /usr/share/doc/picom/picom.conf.example ~/.config/picom.conf
@@ -105,12 +117,12 @@ chmod +x ~/.config/bspwm/bspwmrc
 echo "exec bspwm" >> .xinitrc
 
 ## Edit bind
-nano .config/sxhkd/sxhkdrc 
-nano .config/sxhkd/bspwmrc
+#nano .config/sxhkd/sxhkdrc 
+#nano .config/sxhkd/bspwmrc
 
 # Setup grub
-grub-install --recheck /dev/sda
-grub-mkconfig -o /boot/grub/grub.cfg
+#grub-install --recheck /dev/sda
+#grub-mkconfig -o /boot/grub/grub.cfg
 
 # Exit
-exit
+# exit
