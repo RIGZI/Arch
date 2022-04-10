@@ -17,7 +17,7 @@ pacman -Syy --needed
 
 # Set time
 ln -svf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
-hwclock --systohc --utc
+hwclock --systohc
 
 # Setting host
 echo "pc" >> /etc/hostname
@@ -61,20 +61,14 @@ passwd rigzi
 
 # Install package
 
-## Xorg package
-pacman -S --needed xorg-server xorg-server-common xorg-xrandr xorg-xinit
+## Gnome package
+pacman -S gnome xorg gnome-terminal nautilus gnome-tweaks gnome-control-center gnome-backgrounds adwaita-icon-theme gnome-themes-extra gnome-keyring
 
 ## Main package
-pacman -S --needed firefox fish neofetch htop
-
-## Audio package
-pacman -S --needed pulseaudio pulseaudio-alsa pavucontrol
-
-## Plasma package
-pacman -S --needed sddm plasma konsole dolphin ark kwrite spectacle krunner partitionmanager audacious packagekit-qt5
+pacman -S --needed chromium fish gdm neofetch htop
 
 # Enable service
-systemctl enable sddm
+systemctl enable gdm
 
 # Enable fish
 chsh -s /usr/bin/fish
