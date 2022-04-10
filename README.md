@@ -1,5 +1,6 @@
 # Arch
-Arch install
+
+pacman -Syy
 
 pacman -S github-cli
 
